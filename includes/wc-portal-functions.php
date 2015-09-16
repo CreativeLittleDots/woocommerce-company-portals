@@ -21,7 +21,7 @@
 	
 	function wc_get_portal_company( $portal = null ) {
 		
-		$portal = is_object( $portal ) ? $portal : ( is_int( $portal ) ? get_term_by('id', $portal, 'company_portal') : false);
+		$portal = is_object( $portal ) ? $portal : ( is_numeric( $portal ) ? get_term_by('id', $portal, 'company_portal') : false);
 		
 		if( $portal ) {
 			
@@ -35,7 +35,7 @@
 	
 	function wc_get_company_portal( $company = null ) {
 		
-		$company = is_object( $company ) ? $company : ( is_int( $company ) ? wc_get_company( $company ) : false);
+		$company = is_object( $company ) ? $company : ( is_numeric( $company ) ? wc_get_company( $company ) : false);
 		
 		if( $company ) {
 			

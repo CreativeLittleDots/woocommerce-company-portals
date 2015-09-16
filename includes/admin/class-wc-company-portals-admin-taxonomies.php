@@ -19,7 +19,7 @@ if ( ! class_exists( 'WC_Company_Portals_Admin_Taxonomies' ) ) :
  *
  * Handles the taxonomy functionality.
  */
-class WC_Company_Portals_Admin_Taxonomies {
+class WC_Company_Portals_Admin_Taxonomies extends WC_Admin_Taxonomies {
 
 	/**
 	 * Constructor
@@ -28,7 +28,15 @@ class WC_Company_Portals_Admin_Taxonomies {
 		
 		add_filter('post_row_actions', array($this, 'generate_company_portal_action_link'), 10, 2);
 		add_action('admin_action_generate_company_portal', array($this, 'generate_company_portal') );
-
+		
+		// Add form
+		add_action( 'company_portal_add_form_fields', array( $this, 'add_category_fields' ) );
+		add_action( 'company_portal_edit_form_fields', array( $this, 'edit_category_fields' ), 10 );
+		
+		// Add columns
+		add_filter( 'manage_edit-company_portal_columns', array( $this, 'product_cat_columns' ) );
+		add_filter( 'manage_company_portal_custom_column', array( $this, 'product_cat_column' ), 10, 3 );
+		
 	}
 	
 	/**
