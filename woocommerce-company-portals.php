@@ -175,6 +175,8 @@ class WC_Company_Portals {
 		
 		include( 'includes/wc-portal-functions.php' );
 		include( 'includes/wc-product-functions.php' );
+		include( 'includes/wc-user-functions.php' );
+		include( 'includes/wc-checkout-functions.php' );
 		
 		if ( $this->is_request( 'admin' ) ) {
 			include_once( 'includes/admin/class-wc-company-portals-admin.php' );

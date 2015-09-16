@@ -30,6 +30,10 @@
 				
 				$company = wc_get_portal_company( get_queried_object() );
 				
+			} else if ( WC_Companies()->checkout()->get_company() ) {
+				
+				$company = WC_Companies()->checkout()->get_company();
+				
 			} else if( $current_user->primary_company ) {
 			
 				$company = wc_get_company( $current_user->primary_company );

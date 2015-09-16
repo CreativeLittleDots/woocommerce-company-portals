@@ -93,7 +93,7 @@ class WC_Company_Portal_Taxonomies {
 				
 			}
 			
-			$portal = wc_get_portal_company( get_queried_object() );
+			$company = wc_get_portal_company( get_queried_object() );
 			
 			global $current_user;
 			
@@ -102,6 +102,8 @@ class WC_Company_Portal_Taxonomies {
 				wp_redirect( site_url() );
 				
 			}
+			
+			WC()->session->set( 'portal_id', get_queried_object()->term_id );
 			
 		}
 		
