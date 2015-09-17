@@ -106,6 +106,7 @@ class WC_Company_Portals {
 		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 		
 		add_action( 'init', array( $this, 'init' ), 2 );
+		add_action( 'init', array( 'WC_Company_Portals_Shortcodes', 'init' ), 3 );
 		
 	}
 	
@@ -173,6 +174,8 @@ class WC_Company_Portals {
 	
 	public function includes() {
 		
+		include_once( 'includes/class-wc-company-portals-autoloader.php' );
+		
 		include( 'includes/wc-portal-functions.php' );
 		include( 'includes/wc-product-functions.php' );
 		include( 'includes/wc-user-functions.php' );
@@ -185,6 +188,8 @@ class WC_Company_Portals {
 		if ( $this->is_request( 'frontend' ) ) {
 			$this->frontend_includes();
 		}
+		
+		$this->query = include( 'includes/class-wc-company-portals-query.php' );        // The main query class
 
 		include_once( 'includes/class-wc-company-portals-taxonomies.php' );   // Registers post types		
 		
@@ -195,6 +200,7 @@ class WC_Company_Portals {
 	 */
 	public function frontend_includes() {
 		include_once( 'includes/class-wc-company-portals-display.php' );               		// Display class
+		include_once( 'includes/class-wc-company-portals-shortcodes.php' );                   // Shortcodes class
 	}
 
 	public function init() {
