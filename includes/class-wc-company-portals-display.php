@@ -52,20 +52,14 @@ class WC_Company_Portals_Display {
 	public function add_company_logo_to_login() {
 		
 		if( isset( $_REQUEST['company'] ) ) {
-			
-			if( $company = get_page_by_path($_REQUEST['company'], OBJECT, 'wc-company') ) {
 				
-				$company = wc_get_company( $company );
+			if( $portal = get_term_by('slug', $_REQUEST['company'], 'company_portal') ) {
 				
-				if( $portal = wc_get_company_portal( $company ) ) {
-					
-					$thumbnail_id = get_woocommerce_term_meta( $portal->term_id, 'thumbnail_id', true );
-					
-					$image = wp_get_attachment_image_src( $thumbnail_id, 'thumbnail' );
-					
-					echo '<img src="' . $image[0] . '" />';
-					
-				}
+				$thumbnail_id = get_woocommerce_term_meta( $portal->term_id, 'thumbnail_id', true );
+				
+				$image = wp_get_attachment_image_src( $thumbnail_id, 'thumbnail' );
+				
+				echo '<img src="' . $image[0] . '" />';
 				
 			}
 			
@@ -79,23 +73,13 @@ class WC_Company_Portals_Display {
 	public function add_company_hidden_field_to_login() {
 		
 		if( isset( $_REQUEST['company'] ) ) {
-			
-			if( $company = get_page_by_path($_REQUEST['company'], OBJECT, 'wc-company') ) {
 				
-				$company = wc_get_company( $company );
+			if( $portal = get_term_by('slug', $_REQUEST['company'], 'company_portal') ) {
 				
-				if( $portal = wc_get_company_portal( $company ) ) {
-					
-					$thumbnail_id = get_woocommerce_term_meta( $portal->term_id, 'thumbnail_id', true );
-					
-					$image = wp_get_attachment_image_src( $thumbnail_id, 'medium' );
-					
-					echo '<input type="hidden" name="redirect" value="' . get_term_link( $portal ) . '" />';
-					
-				}
+				echo '<input type="hidden" name="redirect" value="' . get_term_link( $portal ) . '" />';
 				
 			}
-			
+				
 		}
 		
 	}
