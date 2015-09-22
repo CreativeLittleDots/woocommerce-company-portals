@@ -73,15 +73,17 @@ class WC_Company_Portals_Admin_Taxonomies extends WC_Admin_Taxonomies {
 				
 				if( ! $company->portal_id && ! term_exists( $company->slug, 'company_portal' ) ) {
 				
-					$portal_id = wp_insert_term(
+					if($portal_id = wp_insert_term(
 					  $company->get_title(), // the term 
 					  'company_portal', // the taxonomy
 					  array(
 					    'slug' => $company->slug,
 					  )
-					);
-					
-					update_post_meta($company->id, 'portal_id', $portal_id);
+					)) {
+						
+						update_post_meta($company->id, '_portal_id', $portal_id['term_id']);
+
+					}
 					
 				}
 				

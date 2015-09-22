@@ -20,6 +20,12 @@
 	
 	function woocommerce_company_portals_get_price($price, $product, $type = '') {
 		
+		if( is_admin() ) {
+			
+			return $price;
+			
+		}
+		
 		if( is_user_logged_in() ) {
 
 			global $current_user;

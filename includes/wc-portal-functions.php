@@ -39,9 +39,9 @@
 		
 		if( $company ) {
 			
-			if( $company->company_portal_id ) {
+			if( $company->portal_id ) {
 				
-				return get_term_by('id', $company->company_portal_id, 'company_portal');
+				return get_term_by('id', $company->portal_id, 'company_portal');
 				
 			} else {
 				

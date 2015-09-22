@@ -32,11 +32,15 @@ class WC_Company_Portals_Display {
 	*/
 	public function add_view_portal_action( $actions, $company ) {
 		
-		$actions['view_company_portal'] = array(
-			'classes' => apply_filters('woocommerce_companies_view_company_portal_button_classes', array('button view-company-portal') ),
-			'url' => get_term_link( wc_get_company_portal( $company ), 'company_portal' ),
-			'text' => 'View portal',
-		); 
+		if( $portal = wc_get_company_portal( $company ) ) {
+			
+			$actions['view_company_portal'] = array(
+				'classes' => apply_filters('woocommerce_companies_view_company_portal_button_classes', array('button view-company-portal') ),
+				'url' => get_term_link( $portal ),
+				'text' => 'View portal',
+			); 
+			
+		}
 		
 		return $actions;
 		

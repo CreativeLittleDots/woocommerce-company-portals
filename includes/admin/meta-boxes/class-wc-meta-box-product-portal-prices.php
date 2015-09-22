@@ -28,6 +28,7 @@ class WC_Company_Portals_Meta_Box_Product_Data  {
 		add_filter( 'woocommerce_product_data_tabs', array($this, 'portal_prices_data_tab') );
 		add_action( 'woocommerce_product_data_panels', array($this, 'portal_prices_html') );
 		add_action( 'save_post_product', array($this, 'save_portal_prices'), 10, 2 );
+		add_filter( 'woocommerce_companies_admin_company_fields', array($this, 'add_portal_field') );
 		
 	}
 	
@@ -78,6 +79,34 @@ class WC_Company_Portals_Meta_Box_Product_Data  {
 			update_post_meta($post_id, '_portal_prices', $_POST['portal_prices']);
 			
 		}
+		
+	}
+	
+	/**
+	 * Add Portal Field to companies
+	*/
+	public function add_portal_field($fields) {
+		
+		$terms = get_terms('company_portal', array('hide_empty' => false));
+		
+		$portals = array(0 => 'None');
+		
+		foreach($terms as $term) {
+			
+			$portals[$term->term_id] = $term->name;
+			
+		}
+		
+		$fields['portal_id'] = array(
+			'label' => __('Company Portal', 'woocommerce'),
+			'type' => 'select',
+			'options' =>  $portals,
+			'input_class' => array('widefat', 'chosen'),
+			'placeholder' => __('Please choose the portal for this company'),
+			'public' => false
+		);
+		
+		return $fields;
 		
 	}
 	
