@@ -77,7 +77,7 @@ class WC_Company_Portal_Taxonomies {
 	/**
 	* Redirect to homepage if user is not a member of the company
 	*/
-	public function redirect_if_not_company_member() {
+	public static function redirect_if_not_company_member() {
 		
 		if( is_tax('company_portal') ) {
 			
