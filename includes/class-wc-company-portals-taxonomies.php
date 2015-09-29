@@ -83,7 +83,7 @@ class WC_Company_Portal_Taxonomies {
 			
 			if( ! is_user_logged_in() ) {
 				
-				wp_redirect( add_query_arg(array('company' => get_queried_object()->slug), wc_get_page_permalink('myaccount') );
+				wp_redirect( add_query_arg(array('company' => get_queried_object()->slug), wc_get_page_permalink('myaccount') ) );
 				
 				exit;
 				
