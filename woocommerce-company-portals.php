@@ -211,7 +211,7 @@ class WC_Company_Portals {
 		// Set up localisation
 		$this->load_plugin_textdomain();
 		
-		if ( $this->is_request( 'frontend' ) ) {
+		if ( $this->is_request( 'frontend' ) && class_exists('WC_Company_Portals_Display') ) {
 			$this->display = new WC_Company_Portals_Display();	
 		}
 		

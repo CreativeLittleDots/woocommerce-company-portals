@@ -83,7 +83,9 @@ class WC_Company_Portal_Taxonomies {
 			
 			if( ! is_user_logged_in() ) {
 				
-				wp_redirect( site_url() );
+				wp_redirect( add_query_arg(array('company' => get_queried_object()->slug), wc_get_page_permalink('myaccount') );
+				
+				exit;
 				
 			}
 			
@@ -100,6 +102,8 @@ class WC_Company_Portal_Taxonomies {
 			if( ! $company || ! $current_user->companies || ! is_array($current_user->companies) || ! in_array($company->id, $current_user->companies) ) {
 				
 				wp_redirect( site_url() );
+				
+				exit;
 				
 			}
 			
