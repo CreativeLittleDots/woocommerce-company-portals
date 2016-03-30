@@ -101,12 +101,16 @@ class WC_Company_Portals {
 	}
 	
 	public function __construct() {
+    	
+    	if( class_exists('WC_Companies') ) {
 		
-		add_action( 'admin_init', array( $this, 'activate' ) );
-		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
-		
-		add_action( 'init', array( $this, 'init' ), 2 );
-		add_action( 'init', array( 'WC_Company_Portals_Shortcodes', 'init' ), 3 );
+    		add_action( 'admin_init', array( $this, 'activate' ) );
+    		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
+    		
+    		add_action( 'init', array( $this, 'init' ), 2 );
+    		add_action( 'init', array( 'WC_Company_Portals_Shortcodes', 'init' ), 3 );
+    		
+        }
 		
 	}
 	
