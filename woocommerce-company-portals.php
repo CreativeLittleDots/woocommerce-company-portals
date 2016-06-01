@@ -108,10 +108,15 @@ class WC_Company_Portals {
     		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
     		
     		add_action( 'init', array( $this, 'init' ), 2 );
+    		add_action( 'widgets_init', array($this, 'register_widgets') );
     		add_action( 'init', array( 'WC_Company_Portals_Shortcodes', 'init' ), 3 );
     		
         }
 		
+	}
+	
+	public function register_widgets() {
+		include_once( 'includes/widgets/class-wc-widget-company-portals.php' );
 	}
 	
 	/**
@@ -180,10 +185,10 @@ class WC_Company_Portals {
 		
 		include_once( 'includes/class-wc-company-portals-autoloader.php' );
 		
-		include( 'includes/wc-portal-functions.php' );
-		include( 'includes/wc-product-functions.php' );
-		include( 'includes/wc-user-functions.php' );
-		include( 'includes/wc-checkout-functions.php' );
+		include_once( 'includes/wc-portal-functions.php' );
+		include_once( 'includes/wc-product-functions.php' );
+		include_once( 'includes/wc-user-functions.php' );
+		include_once( 'includes/wc-checkout-functions.php' );
 		
 		if ( $this->is_request( 'admin' ) ) {
 			include_once( 'includes/admin/class-wc-company-portals-admin.php' );

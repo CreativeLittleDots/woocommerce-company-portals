@@ -2,6 +2,10 @@
 	
 	function wc_checkout_get_portal_company($company) {
 		
+		if( is_admin() ) {
+			return;
+		}
+		
 		if( WC()->session->get('portal_id') && wc_get_portal_company( WC()->session->get('portal_id') ) ) {
 			
 			$company = wc_get_portal_company( WC()->session->get('portal_id') );

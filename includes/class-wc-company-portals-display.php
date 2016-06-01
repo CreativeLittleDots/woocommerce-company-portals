@@ -37,7 +37,7 @@ class WC_Company_Portals_Display {
 			$actions['view_company_portal'] = array(
 				'classes' => apply_filters('woocommerce_companies_view_company_portal_button_classes', array('button view-company-portal') ),
 				'url' => get_term_link( $portal ),
-				'text' => 'View portal',
+				'text' => 'View Portal',
 			); 
 			
 		}
