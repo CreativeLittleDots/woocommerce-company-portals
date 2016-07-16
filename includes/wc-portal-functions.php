@@ -43,11 +43,19 @@
 			
 			if( $company->portal_id ) {
 				
-				return get_term_by('id', $company->portal_id, 'company_portal');
+				if( $portal = get_term_by('id', $company->portal_id, 'company_portal') ) {
+				
+					return $portal;
+					
+				}
 				
 			} else {
 				
-				return get_term_by('slug', $company->slug, 'company_portal');
+				if( $portal = get_term_by('slug', $company->slug, 'company_portal') ) {
+				
+					return $portal;
+					
+				}
 				
 			}
 			
