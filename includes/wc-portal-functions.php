@@ -3,15 +3,21 @@
 	function wc_get_product_price_for_company($product_id, $company_id, $type = 'regular') {
 		
 		$product = wc_get_product( $product_id );
-		$is_queried_company = ! empty( $GLOBALS['company_portals_company'] ) && $GLOBALS['company_portals_company']->id == $company_id;
-		$company = $is_queried_company ? $GLOBALS['company_portals_company'] : wc_get_company( $company_id );
-		$portal = $is_queried_company ? $GLOBALS['company_portals_company_portal'] : wc_get_company_portal( $company );
+		$is_queried_company = ! empty( $GLOBALS['wc_cp_company'] ) && $GLOBALS['wc_cp_company']->id == $company_id;
+		$company = $is_queried_company ? $GLOBALS['wc_cp_company'] : wc_get_company( $company_id );
+		$portal = $is_queried_company ? $GLOBALS['wc_cp_portal'] : wc_get_company_portal( $company );
 		
-		if( $product && $company && $portal ) {
+		return wc_get_product_price_for_portal($product_id, $portal->term_id, $type);
+		
+	}
+	
+	function wc_get_product_price_for_portal($product_id, $portal_id, $type = 'regular') {
+		
+		if( $product = wc_get_product( $product_id ) ) {
 			
-			if( isset( $product->portal_prices[$portal->term_id][$type] ) ) {
+			if( isset( $product->portal_prices[$portal_id][$type] ) ) {
 				
-				return $product->portal_prices[$portal->term_id][$type];
+				return $product->portal_prices[$portal_id][$type];
 				
 			}
 			
@@ -79,19 +85,25 @@
 					
 				$company = wc_get_portal_company( get_queried_object() );
 				
-			} else if ( WC_Companies()->checkout()->get_company() ) {
+			} else if( ! empty( $_REQUEST['company_portal_id'] ) ) { 
+				
+				$portal = get_term_by( 'id', $_REQUEST['company_portal_id'], 'company_portal' );
+				
+				$company = wc_get_portal_company( $portal );
+				
+			} else if ( is_checkout() && WC_Companies()->checkout()->get_company() ) {
 				
 				$company = WC_Companies()->checkout()->get_company();
 				
 			} else if( $current_user->primary_company ) {
-			
+				
 				$company = wc_get_company( $current_user->primary_company );
 				
 			}
 			
 		}
 		
-		$GLOBALS['company_portals_company'] = $company;
-		$GLOBALS['company_portals_company_portal'] = wc_get_company_portal( $company );
+		$GLOBALS['wc_cp_company'] = $company;
+		$GLOBALS['wc_cp_portal'] = wc_get_company_portal( $company );
 		
 	}

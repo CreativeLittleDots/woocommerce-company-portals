@@ -24,6 +24,8 @@ class WC_Company_Portals_Display {
 		add_filter( 'woocommerce_companies_company_actions', array($this, 'add_view_portal_action'), 10, 2 );
 		add_action( 'woocommerce_login_form_start', array($this, 'add_company_logo_to_login') );
 		add_action( 'woocommerce_login_form_end', array($this, 'add_company_hidden_field_to_login') );
+		add_filter( 'woocommerce_product_add_to_cart_url', array($this, 'add_company_portal_parameter') );
+		add_filter( 'post_type_link', array($this, 'add_company_portal_parameter') );
 						
 	}
 	
@@ -81,6 +83,21 @@ class WC_Company_Portals_Display {
 			}
 				
 		}
+		
+	}
+	
+	/**
+	 * Add Company Portal ID to add_to_cart url
+	*/
+	public function add_company_portal_parameter($link) {
+		
+		if( is_tax( 'company_portal') ) {
+			
+			return add_query_arg('company_portal_id', get_queried_object()->term_id, $link);
+			
+		}
+		
+		return $link;
 		
 	}
 

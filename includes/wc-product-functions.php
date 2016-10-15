@@ -18,7 +18,7 @@
 	
 	add_filter( 'woocommerce_get_price', 'woocommerce_company_portals_get_price', 20, 2);
 	
-	function woocommerce_company_portals_get_price($price, $product, $type = '') {
+	function woocommerce_company_portals_get_price($price, $product, $type = '', $portal = null) {
 		
 		if( is_admin() ) {
 			
@@ -28,29 +28,29 @@
 		
 		if( is_user_logged_in() ) {
 
-			global $current_user;
+			global $current_user, $wc_cp_portal;
 			
-			if( ! empty( $GLOBALS['company_portals_company'] ) && $company = $GLOBALS['company_portals_company'] ) {
+			if( $portal = $portal ? $portal : $wc_cp_portal ) {
 				
-				$product_price_for_company = false;
+				$product_price_for_portal = false;
 				
 				if( $type ) {
 					
-					$product_price_for_company = wc_get_product_price_for_company($product->id, $company->id, $type);
+					$product_price_for_portal = wc_get_product_price_for_portal($product->id, $portal->term_id, $type);
 					
 				} else {
 					
-					$regular_price = wc_get_product_price_for_company($product->id, $company->id, 'regular');
+					$regular_price = wc_get_product_price_for_portal($product->id, $portal->term_id, 'regular');
 					
-					$sale_price = wc_get_product_price_for_company($product->id, $company->id, 'sale');
+					$sale_price = wc_get_product_price_for_portal($product->id, $portal->term_id, 'sale');
 						
-					$product_price_for_company = $sale_price > 0 && $regular_price > $sale_price ? $sale_price : $regular_price;
+					$product_price_for_portal = $sale_price > 0 && $regular_price > $sale_price ? $sale_price : $regular_price;
 					
 				}
 				
-				if( $product_price_for_company ) {
+				if( $product_price_for_portal ) {
 				
-					$price = $product_price_for_company;
+					$price = $product_price_for_portal;
 					
 				}
 				

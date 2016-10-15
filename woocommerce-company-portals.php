@@ -22,17 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if( ! function_exists('is_woocommerce_active') ) {
-	return;
-}
-
-// Check if WooCommerce is active
-if ( ! is_woocommerce_active() ) {
-	
-	return;
-	
-}
-
 class WC_Company_Portals {
 	
 	/**
@@ -214,6 +203,15 @@ class WC_Company_Portals {
 
 	public function init() {
 		
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		
+		// Check if WooCommerce is active
+		if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+			
+			return;
+			
+		}
+		
 		$this->define_constants();
 		$this->includes();
 		
@@ -221,7 +219,11 @@ class WC_Company_Portals {
 		$this->load_plugin_textdomain();
 		
 		if ( $this->is_request( 'frontend' ) && class_exists('WC_Company_Portals_Display') ) {
-			$this->display = new WC_Company_Portals_Display();	
+			$this->display = new WC_Company_Portals_Display();		
+		}
+		
+		if ( class_exists('WC_Company_Portals_Cart') ) {
+			$this->cart = new WC_Company_Portals_Cart();
 		}
 		
 	}
