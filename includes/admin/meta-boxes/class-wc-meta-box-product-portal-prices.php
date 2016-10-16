@@ -51,6 +51,12 @@ class WC_Company_Portals_Meta_Box_Product_Data  {
 	 */
 	public function portal_prices_html() {
 		
+		if( empty( $_REQUEST['post'] ) ) {
+			
+			return;
+			
+		}
+		
 		$product = wc_get_product( $_REQUEST['post'] );
 		
 		$portal_prices = $product->portal_prices && is_array( $product->portal_prices ) ? $product->portal_prices : array();

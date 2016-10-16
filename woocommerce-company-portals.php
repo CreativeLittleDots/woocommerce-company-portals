@@ -222,7 +222,7 @@ class WC_Company_Portals {
 			$this->display = new WC_Company_Portals_Display();		
 		}
 		
-		if ( class_exists('WC_Company_Portals_Cart') ) {
+		if ( ( $this->is_request( 'frontend' ) || $this->is_request( 'cron' ) ) && class_exists('WC_Company_Portals_Cart') ) {
 			$this->cart = new WC_Company_Portals_Cart();
 		}
 		
