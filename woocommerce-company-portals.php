@@ -1,7 +1,7 @@
 <?php
 /*
 * Plugin Name: WooCommerce Company Portals
-* Description: Extends WooCommerce Companies to enable company specific product archives and prices
+* Description: Extends WooCommerce Companies, adding functionality to provide Company specific pricing and Company Portals (Archives)
 * Version: 1.0.0
 * Author: Creative Little Dots
 * Author URI: http://creativelittledots.co.uk
