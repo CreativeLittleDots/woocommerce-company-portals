@@ -26,6 +26,8 @@ class WC_Company_Portals_Display {
 		add_action( 'woocommerce_login_form_end', array($this, 'add_company_hidden_field_to_login') );
 		add_filter( 'woocommerce_product_add_to_cart_url', array($this, 'add_company_portal_parameter') );
 		add_filter( 'post_type_link', array($this, 'add_company_portal_parameter') );
+		add_action( 'woocommerce_after_add_to_cart_button', array($this, 'display_hidden_portal_field') );
+		add_filter( 'woocommerce_loop_add_to_cart_link', array($this, 'add_portal_data_attribute' ) ); 
 						
 	}
 	
@@ -59,9 +61,7 @@ class WC_Company_Portals_Display {
 				
 				$thumbnail_id = get_woocommerce_term_meta( $portal->term_id, 'thumbnail_id', true );
 				
-				$image = wp_get_attachment_image_src( $thumbnail_id, 'thumbnail' );
-				
-				echo '<img src="' . $image[0] . '" />';
+				echo get_the_post_thumbnail( $thumbnail_id, 'thumbnail' );
 				
 			}
 			
@@ -78,7 +78,10 @@ class WC_Company_Portals_Display {
 				
 			if( $portal = get_term_by('slug', $_REQUEST['company'], 'company_portal') ) {
 				
-				echo '<input type="hidden" name="redirect" value="' . get_term_link( $portal ) . '" />';
+				$name = 'redirect';
+				$value = get_term_link( $portal );
+				
+				wc_get_template( 'global/hidden-field.php', compact('name', 'value'), '', WC_Company_Portals()->plugin_path() . '/templates/' );
 				
 			}
 				
@@ -98,6 +101,41 @@ class WC_Company_Portals_Display {
 		}
 		
 		return $link;
+		
+	}
+	
+	/**
+	 * Display Company Portal ID hidden field on single product form
+	*/
+	public function display_hidden_portal_field() {
+		
+		if( ! empty( $_REQUEST['company_portal_id'] ) ) {
+			
+			$name = 'company_portal_id';
+			;
+			
+			wc_get_template( 'global/hidden-field.php', compact('name', 'value'), '', WC_Company_Portals()->plugin_path() . '/templates/' );
+			
+		}
+		
+	}
+	
+	/**
+	 * Display Company Portal ID data attribute on single product add to cart form
+	*/
+	public function add_portal_data_attribute($button) {
+		
+		if( ! empty( $_REQUEST['company_portal_id'] ) ) {
+			
+			$company_portal_id = $_REQUEST['company_portal_id'];
+			
+			$attribute = "data-company_portal_id='$company_portal_id'";
+			
+			$button = str_replace( 'data-product_id', $attribute . ' data-product_id', $button );
+			
+		}
+		
+		return $button;
 		
 	}
 

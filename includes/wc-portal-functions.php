@@ -85,12 +85,6 @@
 					
 				$company = wc_get_portal_company( get_queried_object() );
 				
-			} else if( ! empty( $_REQUEST['company_portal_id'] ) ) { 
-				
-				$portal = get_term_by( 'id', $_REQUEST['company_portal_id'], 'company_portal' );
-				
-				$company = wc_get_portal_company( $portal );
-				
 			} else if ( is_checkout() && WC_Companies()->checkout()->get_company() ) {
 				
 				$company = WC_Companies()->checkout()->get_company();

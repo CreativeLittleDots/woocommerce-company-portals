@@ -40,20 +40,25 @@ class WC_Company_Portals_Cart {
 	 */
 	public function wc_cp_add_cart_item_filter( $cart_item, $cart_item_key ) {
 		
-		woocommerce_set_company_portal_company();
-		
-		global $wc_cp_portal;
+		if( ! empty( $_REQUEST['company_portal_id'] ) ) { 
+				
+			$cart_item['company']['portal_id'] = $_REQUEST['company_portal_id'];
+			
+		} 
 
-		if( ! empty( $wc_cp_portal ) || ! empty( $cart_item['company'] ) ) {
+		if( ! empty( $cart_item['company']['portal_id'] ) ) {
 			
-			$portal = $wc_cp_portal ? $wc_cp_portal : get_term_by( 'id', $cart_item['company']['portal_id'], 'company_portal' );
+			$portal = get_term_by( 'id', $cart_item['company']['portal_id'], 'company_portal' );
 			
-			$cart_item['data']->variation_id = 999;
+			if( $portal && ! is_wp_error( $portal ) ) {
 			
-			$cart_item['company']['price'] = ! empty( $cart_item['company']['price'] ) ? $cart_item['company']['price'] : woocommerce_company_portals_get_price($cart_item['data']->get_price(), $cart_item['data'], null, $portal);
-			$cart_item['company']['portal_id'] = ! empty( $cart_item['company']['portal_id'] ) ? $cart_item['company']['portal_id'] : $portal->term_id;
-			
-			$cart_item['variation']['Company'] = ! empty( $cart_item['variation']['Company'] ) ? $cart_item['variation']['Company'] : $portal->name;
+				$cart_item['data']->variation_id = 999;
+				
+				$cart_item['company']['price'] = ! empty( $cart_item['company']['price'] ) ? $cart_item['company']['price'] : woocommerce_company_portals_get_price($cart_item['data']->get_price(), $cart_item['data'], null, $portal);
+				
+				$cart_item['variation']['Company'] = ! empty( $cart_item['variation']['Company'] ) ? $cart_item['variation']['Company'] : $portal->name;
+				
+			}
 			
 		}	
 
