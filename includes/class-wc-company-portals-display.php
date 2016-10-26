@@ -112,7 +112,6 @@ class WC_Company_Portals_Display {
 		if( ! empty( $_REQUEST['company_portal_id'] ) ) {
 			
 			$name = 'company_portal_id';
-			;
 			
 			wc_get_template( 'global/hidden-field.php', compact('name', 'value'), '', WC_Company_Portals()->plugin_path() . '/templates/' );
 			
@@ -125,9 +124,11 @@ class WC_Company_Portals_Display {
 	*/
 	public function add_portal_data_attribute($button) {
 		
-		if( ! empty( $_REQUEST['company_portal_id'] ) ) {
+		global $wc_cp_portal;
+		
+		if( $wc_cp_portal ) {
 			
-			$company_portal_id = $_REQUEST['company_portal_id'];
+			$company_portal_id = $wc_cp_portal->term_id;
 			
 			$attribute = "data-company_portal_id='$company_portal_id'";
 			
