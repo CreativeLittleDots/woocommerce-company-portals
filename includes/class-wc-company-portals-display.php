@@ -61,7 +61,7 @@ class WC_Company_Portals_Display {
 				
 				$thumbnail_id = get_woocommerce_term_meta( $portal->term_id, 'thumbnail_id', true );
 				
-				echo get_the_post_thumbnail( $thumbnail_id, 'thumbnail' );
+				echo wp_get_attachment_image( $thumbnail_id, 'thumbnail' );
 				
 			}
 			
