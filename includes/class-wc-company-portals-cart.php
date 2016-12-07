@@ -28,6 +28,8 @@ class WC_Company_Portals_Cart {
 		add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'wc_cp_get_cart_data_from_session' ), 10, 2 );
 		
 		add_filter( 'woocommerce_get_price', array($this, 'wc_cp_get_price'), 10, 2 );
+		
+		add_filter( 'oocommerce_shipping_legacy_free_shipping_is_available', array($this, 'maybe_allow_free_shipping') );
 						
 	}
 	
@@ -108,6 +110,15 @@ class WC_Company_Portals_Cart {
 		return $cart_item;
 	}
 	
-	
+	/**
+	 * Maybe allow free shipping
+	 *
+	 * @param  boolean 	$enabled
+	 */
+	public function maybe_allow_free_shipping($enabled) {
+		
+		return $enabled;
+		
+	}
 	
 }
