@@ -89,7 +89,13 @@
 				
 				$company = WC_Companies()->checkout()->get_company();
 				
+			} else if ( ! empty( $_REQUEST['company_portal_id'] ) ) {
+				
+				$company = wc_get_portal_company( $_REQUEST['company_portal_id'] );
+				
 			}
+			
+			$company = $company instanceof WC_Company && in_array( $company->id, $current_user->companies ) ? $company : false;
 			
 		}
 		
