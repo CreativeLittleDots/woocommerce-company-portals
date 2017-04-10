@@ -82,11 +82,15 @@ class WC_Company_Portals_Cart {
 			
 		}
 		
-		foreach(WC()->cart->cart_contents as $item) {
+		if( WC()->cart ) {
 		
-			if( $product->id == $item['data']->id ) {
-				
-				$price = ! empty( $item['company']['price'] ) ? $item['company']['price'] : $price;
+			foreach(WC()->cart->cart_contents as $item) {
+			
+				if( $product->id == $item['data']->id ) {
+					
+					$price = ! empty( $item['company']['price'] ) ? $item['company']['price'] : $price;
+					
+				}
 				
 			}
 			
