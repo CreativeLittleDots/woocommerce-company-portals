@@ -23,14 +23,56 @@ class WC_Company_Portals_Cart {
 
 		// Modify cart item data for portal price
 		add_filter( 'woocommerce_add_cart_item', array( $this, 'wc_cp_add_cart_item_filter' ), 10, 2 );
+		
+		add_filter( 'woocommerce_get_item_data', array($this, 'wc_cp_display_cart_item_data'), 10, 2 );
 
 		// Preserve data in cart
 		add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'wc_cp_get_cart_data_from_session' ), 10, 2 );
 		
 		add_filter( 'woocommerce_get_price', array($this, 'wc_cp_get_price'), 10, 2 );
-		
-		add_filter( 'oocommerce_shipping_legacy_free_shipping_is_available', array($this, 'maybe_allow_free_shipping') );
 						
+	}
+	
+	public function wc_cp_display_cart_item_data($item_data, $cart_item) {
+		
+		if( ! empty( $cart_item['company']['portal_id'] ) ) {
+			
+			foreach ( $cart_item['variation'] as $name => $value ) {
+
+                if ( '' === $value )
+                    continue;
+
+                $taxonomy = wc_attribute_taxonomy_name( str_replace( 'attribute_pa_', '', urldecode( $name ) ) );
+
+                // If this is a term slug, get the term's nice name
+                if ( taxonomy_exists( $taxonomy ) ) {
+                    $term = get_term_by( 'slug', $value, $taxonomy );
+                    if ( ! is_wp_error( $term ) && $term && $term->name ) {
+                        $value = $term->name;
+                    }
+                    $label = wc_attribute_label( $taxonomy );
+
+                // If this is a custom option slug, get the options name
+                } else {
+                    $value              = apply_filters( 'woocommerce_variation_option_name', $value );
+                    $product_attributes = $cart_item['data']->get_attributes();
+                    if ( isset( $product_attributes[ str_replace( 'attribute_', '', $name ) ] ) ) {
+                        $label = wc_attribute_label( $product_attributes[ str_replace( 'attribute_', '', $name ) ]['name'] );
+                    } else {
+                        $label = $name;
+                    }
+                }
+
+                $item_data[] = array(
+                    'key'   => $label,
+                    'value' => $value
+                );
+            }	
+			
+		}
+		
+		return $item_data;
+		
 	}
 	
 	/**
@@ -54,7 +96,7 @@ class WC_Company_Portals_Cart {
 			
 			if( $portal && ! is_wp_error( $portal ) ) {
 			
-				$cart_item['data']->variation_id = 999;
+				//$cart_item['data']->variation_id = 999;
 				
 				$cart_item['company']['price'] = ! empty( $cart_item['company']['price'] ) ? $cart_item['company']['price'] : woocommerce_company_portals_get_price($cart_item['data']->get_price(), $cart_item['data'], null, $portal);
 				
@@ -112,17 +154,6 @@ class WC_Company_Portals_Cart {
 		$cart_item = $this->wc_cp_add_cart_item_filter( $cart_item, null );
 
 		return $cart_item;
-	}
-	
-	/**
-	 * Maybe allow free shipping
-	 *
-	 * @param  boolean 	$enabled
-	 */
-	public function maybe_allow_free_shipping($enabled) {
-		
-		return $enabled;
-		
 	}
 	
 }
