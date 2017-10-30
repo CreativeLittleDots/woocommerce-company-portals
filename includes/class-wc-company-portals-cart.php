@@ -29,7 +29,7 @@ class WC_Company_Portals_Cart {
 		// Preserve data in cart
 		add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'wc_cp_get_cart_data_from_session' ), 10, 2 );
 		
-		add_filter( 'woocommerce_get_price', array($this, 'wc_cp_get_price'), 10, 2 );
+		add_filter( 'woocommerce_product_get_price', array($this, 'wc_cp_get_price'), 10, 2 );
 						
 	}
 	
@@ -128,7 +128,7 @@ class WC_Company_Portals_Cart {
 		
 			foreach(WC()->cart->cart_contents as $item) {
 			
-				if( $product->id == $item['data']->id ) {
+				if( $product->get_id() == $item['data']->get_id() ) {
 					
 					$price = ! empty( $item['company']['price'] ) ? $item['company']['price'] : $price;
 					

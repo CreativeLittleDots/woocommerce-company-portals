@@ -1,6 +1,6 @@
 <?php
 	
-	add_filter( 'woocommerce_get_regular_price', 'woocommerce_company_portals_get_regular_price', 20, 2);
+	add_filter( 'woocommerce_product_get_regular_price', 'woocommerce_company_portals_get_regular_price', 20, 2);
 	
 	function woocommerce_company_portals_get_regular_price($price, $product) {
 		
@@ -8,7 +8,7 @@
 		
 	}
 
-	add_filter( 'woocommerce_get_sale_price', 'woocommerce_company_portals_get_sale_price', 20, 2);
+	add_filter( 'woocommerce_product_get_sale_price', 'woocommerce_company_portals_get_sale_price', 20, 2);
 	
 	function woocommerce_company_portals_get_sale_price($price, $product) {
 		
@@ -16,7 +16,7 @@
 		
 	}
 	
-	add_filter( 'woocommerce_get_price', 'woocommerce_company_portals_get_price', 20, 2);
+	add_filter( 'woocommerce_product_get_price', 'woocommerce_company_portals_get_price', 20, 2);
 	
 	function woocommerce_company_portals_get_price($price, $product, $type = '', $portal = null) {
 		
@@ -36,13 +36,13 @@
 				
 				if( $type ) {
 					
-					$product_price_for_portal = wc_get_product_price_for_portal($product->id, $portal->term_id, $type);
+					$product_price_for_portal = wc_get_product_price_for_portal($product->get_id(), $portal->term_id, $type);
 					
 				} else {
 					
-					$regular_price = wc_get_product_price_for_portal($product->id, $portal->term_id, 'regular');
+					$regular_price = wc_get_product_price_for_portal($product->get_id(), $portal->term_id, 'regular');
 					
-					$sale_price = wc_get_product_price_for_portal($product->id, $portal->term_id, 'sale');
+					$sale_price = wc_get_product_price_for_portal($product->get_id(), $portal->term_id, 'sale');
 						
 					$product_price_for_portal = $sale_price > 0 && $regular_price > $sale_price ? $sale_price : $regular_price;
 					

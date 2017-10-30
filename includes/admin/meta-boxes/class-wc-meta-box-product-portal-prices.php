@@ -40,6 +40,7 @@ class WC_Company_Portals_Meta_Box_Product_Data  {
 		$tabs['portal_prices'] = array(
 			'label'  => __( 'Portal Prices', 'woocommerce-company-portals' ),
 			'target' => 'portal_prices_product_data',
+			'class' => ''
 		);
 		
 		return $tabs;
@@ -59,9 +60,9 @@ class WC_Company_Portals_Meta_Box_Product_Data  {
 		
 		$product = wc_get_product( $_REQUEST['post'] );
 		
-		$portal_prices = $product->portal_prices && is_array( $product->portal_prices ) ? $product->portal_prices : array();
+		$portal_prices = $product->get_meta('portal_prices') && is_array( $product->get_meta('portal_prices') ) ? $product->get_meta('portal_prices') : array();
 		
-		$portals = wp_get_object_terms( $product->id, 'company_portal' );
+		$portals = wp_get_object_terms( $product->get_id(), 'company_portal' );
 		
 		ob_start();
 		
