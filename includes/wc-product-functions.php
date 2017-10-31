@@ -61,3 +61,17 @@
 		return $price;
 		
 	}
+	
+	function wc_product_in_portal($product, $portal) {
+		
+		return has_term($portal->term_id, 'company_portal', $product->get_id());
+		
+	}
+	
+	function wc_product_in_user_portal($product) {
+		
+		global $wc_cp_portal;
+		
+		return $wc_cp_portal && wc_product_in_portal($product, $wc_cp_portal);
+		
+	}

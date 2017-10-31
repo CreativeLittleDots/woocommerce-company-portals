@@ -112,7 +112,8 @@ class WC_Company_Portals_Display {
 		if( ! empty( $_REQUEST['company_portal_id'] ) ) {
 			
 			$name = 'company_portal_id';
-			
+			$value = get_term_link( (int) $_REQUEST['company_portal_id'], 'company_portal' );
+
 			wc_get_template( 'global/hidden-field.php', compact('name', 'value'), '', WC_Company_Portals()->plugin_path() . '/templates/' );
 			
 		}

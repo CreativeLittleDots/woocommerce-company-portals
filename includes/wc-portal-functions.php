@@ -35,7 +35,12 @@
 		
 		if( $portal ) {
 			
-			return wc_get_company( get_page_by_title( $portal->name, OBJECT, 'wc-company' ) );
+			$companies = wc_get_companies([
+				'meta_key' => '_portal_id',
+				'meta_value' => $portal->term_id
+			]);
+			
+			return $companies ? wc_get_company( reset( $companies ) ) : null;
 			
 		}
 		
@@ -101,7 +106,11 @@
 			
 		}
 		
-		$GLOBALS['wc_cp_company'] = $company;
-		$GLOBALS['wc_cp_portal'] = wc_get_company_portal( $company );
+		if( $company && in_array( $company->get_id(), get_user_meta( get_current_user_id(), 'companies', true ) ) ) {
+		
+			$GLOBALS['wc_cp_company'] = $company;
+			$GLOBALS['wc_cp_portal'] = wc_get_company_portal( $company );
+			
+		}
 		
 	}
