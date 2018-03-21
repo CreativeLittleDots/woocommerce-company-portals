@@ -60,7 +60,7 @@ class WC_Company_Portals_Meta_Box_Product_Data  {
 		
 		$product = wc_get_product( $_REQUEST['post'] );
 		
-		$portal_prices = $product->get_meta('portal_prices') && is_array( $product->get_meta('portal_prices') ) ? $product->get_meta('portal_prices') : array();
+		$portal_prices = $product->get_meta('_portal_prices') && is_array( $product->get_meta('_portal_prices') ) ? $product->get_meta('_portal_prices') : array();
 		
 		$portals = wp_get_object_terms( $product->get_id(), 'company_portal' );
 		

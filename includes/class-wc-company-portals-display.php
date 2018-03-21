@@ -81,7 +81,11 @@ class WC_Company_Portals_Display {
 				$name = 'redirect';
 				$value = get_term_link( $portal );
 				
-				wc_get_template( 'global/hidden-field.php', compact('name', 'value'), '', WC_Company_Portals()->plugin_path() . '/templates/' );
+				if( $value && ! is_wp_error($value) ) {
+				
+					wc_get_template( 'global/hidden-field.php', compact('name', 'value'), '', WC_Company_Portals()->plugin_path() . '/templates/' );
+					
+				}
 				
 			}
 				
@@ -112,8 +116,8 @@ class WC_Company_Portals_Display {
 		if( ! empty( $_REQUEST['company_portal_id'] ) ) {
 			
 			$name = 'company_portal_id';
-			$value = get_term_link( (int) $_REQUEST['company_portal_id'], 'company_portal' );
-
+			$value = $_REQUEST['company_portal_id'];
+			
 			wc_get_template( 'global/hidden-field.php', compact('name', 'value'), '', WC_Company_Portals()->plugin_path() . '/templates/' );
 			
 		}

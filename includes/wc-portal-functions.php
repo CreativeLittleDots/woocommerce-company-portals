@@ -15,7 +15,7 @@
 		
 		if( $product = wc_get_product( $product_id ) ) {
 			
-			$prices = $product->get_meta('portal_prices');
+			$prices = $product->get_meta('_portal_prices');
 			
 			if( isset( $prices[$portal_id][$type] ) ) {
 				

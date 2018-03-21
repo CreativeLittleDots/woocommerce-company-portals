@@ -1,6 +1,6 @@
 <?php
 	
-	add_filter( 'woocommerce_product_get_regular_price', 'woocommerce_company_portals_get_regular_price', 20, 2);
+	add_filter( 'woocommerce_product_get_regular_price', 'woocommerce_company_portals_get_regular_price', 999, 2);
 	
 	function woocommerce_company_portals_get_regular_price($price, $product) {
 		
@@ -8,7 +8,7 @@
 		
 	}
 
-	add_filter( 'woocommerce_product_get_sale_price', 'woocommerce_company_portals_get_sale_price', 20, 2);
+	add_filter( 'woocommerce_product_get_sale_price', 'woocommerce_company_portals_get_sale_price', 999, 2);
 	
 	function woocommerce_company_portals_get_sale_price($price, $product) {
 		
@@ -16,7 +16,7 @@
 		
 	}
 	
-	add_filter( 'woocommerce_product_get_price', 'woocommerce_company_portals_get_price', 20, 2);
+	add_filter( 'woocommerce_product_get_price', 'woocommerce_company_portals_get_price', 999, 2);
 	
 	function woocommerce_company_portals_get_price($price, $product, $type = '', $portal = null) {
 		

@@ -48,7 +48,7 @@ class WC_Company_Portals_Admin_Taxonomies extends WC_Admin_Taxonomies {
 			
 			if( $company = wc_get_company($post) ) {
 				
-				if( ! $company->portal_id ) { 
+				if( ! $company->portal_id || ! get_term($company->portal_id) ) { 
 					
 					$actions['generate_company_portal'] = '<a href="' . admin_url('admin.php?action=generate_company_portal&company_id=' . $post->ID) . '">Generate Company Portal</a>';
 					
