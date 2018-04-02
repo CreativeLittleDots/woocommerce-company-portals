@@ -82,8 +82,8 @@ class WC_Company_Portals_Display {
 				$value = get_term_link( $portal );
 				
 				if( $value && ! is_wp_error($value) ) {
-				
-					wc_get_template( 'global/hidden-field.php', compact('name', 'value'), '', WC_Company_Portals()->plugin_path() . '/templates/' );
+					
+					woocommerce_form_field( 'redirect', array('type' => 'hidden'), $value );
 					
 				}
 				
